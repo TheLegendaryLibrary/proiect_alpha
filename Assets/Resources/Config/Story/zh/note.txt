@@ -1,0 +1,145 @@
+rourou<name:肉肉;image:rourou;windows:1;voice:voice1>
+
+<t 200> 设置文本显示速度
+<a> 在文本最后配置时，可以让当前对话完成后自动开始以一个动作。
+<c> 在文本中配置时，可以是对话停止在配置位置。点击再继续播放后续对话。
+
+<show x,y,t,sort,orientation,face,id,looptype,skiptype>
+ 显示对应的角色
+	x,y			屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间
+	sort		所在层级，越小越前
+	orientation	朝向,left:朝左；right:朝右
+	face		出现时的表情
+	id			角色id，需要和Character中的id对应
+	looptype	没用
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步
+	
+
+<hide t,face,id,looptype,skiptype>
+ 隐藏对应的角色
+	t			消失所需的时间
+	face		消失时的表情
+	id			角色id，需要和Character中的id对应
+	looptype	没用
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步
+
+<move x,y,t,type,id,looptype,skiptype>
+ 移动角色
+	x,y			屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		移动方式 *1
+	id			角色id，需要和Character中的id对应
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+	
+<scale x,y,t,type,id,looptype,skiptype>
+ 缩放角色
+	x,y			屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		旋转方式 *1
+	id			角色id，需要和Character中的id对应
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+
+<rotate angle,t,type,id,looptype,skiptype>
+ 旋转角色
+	angle		屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		旋转方式 *1
+	id			角色id，需要和Character中的id对应
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+
+<windowmove x,y,t,type,looptype,skiptype>
+	x,y			屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		移动方式 *1
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+	
+<windowscale x,y,t,type,looptype,skiptype>
+	x,y			屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		旋转方式 *1
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+
+<windowrotate angle,t,type,looptype,skiptype>
+	angle		屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		旋转方式 *1
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+
+<bgmove x,y,t,type,looptype,skiptype>
+	x,y			屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		移动方式 *1
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+
+<bgscale x,y,t,type,looptype,skiptype>
+	x,y			屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		旋转方式 *1
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+
+<bgsrotate angle,t,type,looptype,skiptype>
+	angle		屏幕位置，为屏幕长宽的比例
+	t			出现所需的时间 
+	type		旋转方式 *1
+	looptype	loop:循环；notloop:不循环；pingpong:乒乓方式循环；数字：可以设置乒乓循环的次数
+	skiptype	auto:执行完动作后自动开始下一步；click:执行完动作后点击开始一步；sametime:执行动作的同时开始下一步	
+
+<stop id,skiptype>
+	停止指定id的动画,如果输入WINDOW则停止对话框，如果输入BG则停止背景
+
+<setbg id,t,skiptype>
+	切换指定id的背景
+
+<loadstory storyname>
+	读取指定故事
+
+<giveitem materialType:ID>
+	赠送指定物品
+	
+<playbgm bgmname>
+	播放指定音乐
+<stopbgm>
+	停止播放音乐
+//////////////////////////////////////////////////////////////////////////
+//type:缩放/移动/旋转的方式
+	"linear"					——线性
+	"easeInBack"				——进入时回弹
+	"easeOutBack"				——完成时回弹
+	"easeInOutBack"				——进入和完成时都回弹
+	"easeInBounce"				——进入时反弹
+	"easeOutBounce"				——完成时反弹
+	"easeInOutBounce"			——进入和完成时都反弹
+	"easeInElastic"				——进入时弹簧震动
+	"easeOutElastic"			——完成时弹簧震动
+	"easeInOutElastic"			——进入和完成时都弹簧震动
+	"easeInSine"				——进入时匀减速（小）
+	"easeOutSine"				——完成时匀减速（小）
+	"easeInOutSine"				——进入和完成时都匀减速（小）
+	"easeInQuad"				——进入时匀减速（中）
+	"easeOutQuad"				——完成时匀减速（中）
+	"easeInOutQuad"				——进入和完成时都匀减速（中）
+	"easeInCirc"				——进入时匀减速（大）
+	"easeOutCirc"				——完成时匀减速（大）
+	"easeInOutCirc"				——进入和完成时都匀减速（大）
+
+//skiptype：
+	click						——点击进入下一步
+	auto						——完成后自动进入下一步
+	sametime					——同事开始下一步
+	
+	
+	
+	
+例子：
+//文字框展开的效果
+//<windowscale 1,0,0.01,linear,notloop,auto>
+//<windowscale 1,1,1,linear,notloop,sametime>

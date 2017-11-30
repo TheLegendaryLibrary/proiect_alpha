@@ -1,0 +1,46 @@
+//角色名<id:角色ID;image:立绘>
+[Character]
+npc1<name:他喵的坑;image:lili;windows:none;voice:voice1>
+npc2<name:他喵的坑;image:maria;windows:board3;voice:voice1>
+
+[Background]
+
+
+[Sound]
+
+
+//对话列表
+[ChatList]
+{npc1:idle}第1句话，测试对话！
+{npc1:idle}第2句话，测试对话！
+{npc1:idle}第3句话，测试对话！
+{npc1:idle}第4句话，测试对话！
+{npc1:idle}第5句话，测试对话！
+{npc1:idle}第6句话，测试对话！
+//<changescene storyTest>
+<selection npc2,flag1,第1句话，测试选项>
+<selection npc2,flag2,第2句话，测试选项>
+<selection npc2,flag3,第3句话，测试选项>
+
+<benginflag flag1>
+{npc1:idle}flag1，测试对话1！
+<selection npc2,flag11,第1句话，测试选项>
+<selection npc2,flag12,第2句话，测试选项>
+<endflag>
+
+<benginflag flag2>
+{npc1:idle}flag2，测试对话1！
+{npc1:idle}flag2，测试对话2！
+<endflag>
+
+<benginflag flag3>
+{npc1:idle}flag3，测试对话1！
+{npc1:idle}flag3，测试对话2！
+{npc1:idle}flag3，测试对话3！
+<endflag>
+
+{npc1:idle}通用动画1
+{npc1:idle}通用动画2
+
+//保存flag
+//<saveflag>
