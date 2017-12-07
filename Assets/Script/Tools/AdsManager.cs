@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_IOS || UNITY_ANDROID
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
@@ -73,3 +74,4 @@ public class AdsManager : MonoBehaviour
         Advertisement.Show();
     }
 }
+#endif
