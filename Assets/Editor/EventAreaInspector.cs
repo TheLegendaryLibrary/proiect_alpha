@@ -44,6 +44,12 @@ public class EventAreaInspector : Editor{
         else if (element.FindProperty("checkType").enumValueIndex == 2)
             EditorGUILayout.HelpBox("不检查", MessageType.None);
         EditorGUILayout.EndVertical();
+        EditorGUILayout.BeginVertical("box");
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("触发后隐藏道具: ", GUILayout.MaxWidth(100));
+        EditorGUILayout.PropertyField(element.FindProperty("ishideitem"), pointContent, GUILayout.MaxWidth(80));
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndVertical();
         EditorGUILayout.Space();
 
         //状态列表标题

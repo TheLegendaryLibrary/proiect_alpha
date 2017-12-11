@@ -13,6 +13,7 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
         None
     }
 
+    public bool ishideitem = false;
     private RectTransform Area;
     private CanvasGroup group;
     float prealpha = 1f;
@@ -136,6 +137,10 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
                 {
                     if (action != null)
                         maxTime = Mathf.Max(maxTime, action.length);
+
+                    if (ishideitem)
+                        dropObject.GetComponent<Image>().color = Color.clear;
+
                     PlayAnimation(action);
                 }
                 data.pointerDrag = null;
