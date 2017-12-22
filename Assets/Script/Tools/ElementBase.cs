@@ -17,6 +17,11 @@ public class ElementBase : MonoBehaviour {
         Complete,
         Fail
     }
+    public enum AnimationType
+    {
+        Same = 0,
+        Next,
+    }
 
     // Use this for initialization
     virtual public void Awake()

@@ -35,10 +35,17 @@ public class TimeTool: MonoBehaviour{
     /// </summary>
     public static void SetWaitTime(float time,GameObject obj,VoidDelegate callback)
     {
-        if (obj.GetComponent<TimeTool>() == null)
+        TimeTool tt = obj.GetComponent<TimeTool>();
+        if (tt == null)
         {
-            TimeTool tt = CreatTimeObject(obj);
+            tt = CreatTimeObject(obj);
             tt.StartWait(time, callback);
+        }
+        else
+        {
+            Destroy(tt);
+            TimeTool newtt = CreatTimeObject(obj);
+            newtt.StartWait(time, callback);
         }
     }
 
