@@ -5,6 +5,7 @@ using System.Collections;
 
 public class DragElement : MonoBehaviour, IPointerDownHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+    LevelManager levelManager;
     private Vector2 originalLocalPointerPosition;
     private Vector3 originalPanelLocalPosition;
     private RectTransform dragObject;
@@ -21,6 +22,9 @@ public class DragElement : MonoBehaviour, IPointerDownHandler, IDragHandler, IBe
     //初始化当前状态
     void IntiElement()
     {
+        //获取关卡管理器
+        levelManager = transform.Find("/Main Camera").GetComponent<LevelManager>();
+
         dragObject = transform as RectTransform;
         dragArea = dragObject.parent as RectTransform;
 
@@ -33,6 +37,12 @@ public class DragElement : MonoBehaviour, IPointerDownHandler, IDragHandler, IBe
 
     public void OnPointerDown(PointerEventData data)
     {
+        //如果正在播放动画则不响应点击
+        if (!GetLevelManager().isCommonState())
+        {
+            data.pointerDrag = null;
+            return;
+        } 
         RemoveMoveCenterEffect();
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(dragArea, data.position, data.pressEventCamera, out originalLocalPointerPosition);
@@ -46,6 +56,12 @@ public class DragElement : MonoBehaviour, IPointerDownHandler, IDragHandler, IBe
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        //如果正在播放动画则不响应点击
+        if (!GetLevelManager().isCommonState())
+        {
+            eventData.pointerDrag = null;
+            return;
+        }
         RemoveMoveCenterEffect();
         group.blocksRaycasts = false;
     }
@@ -107,5 +123,10 @@ public class DragElement : MonoBehaviour, IPointerDownHandler, IDragHandler, IBe
         if (moveeffect == null)
             moveeffect = dropObject.gameObject.AddComponent<MoveToCenter>();
         return moveeffect;
+    }
+
+        public LevelManager GetLevelManager()
+    {
+        return levelManager;
     }
 }

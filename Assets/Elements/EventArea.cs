@@ -123,6 +123,8 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
         GameObject dropObject = GetDropObject(data);
         if (dropObject == null)
             return;
+        //如果正在播放动画则不响应点击
+        if (!GetLevelManager().isCommonState()) return;
 
         ArrayList stateList = GetStateDo(GetLevelManager().GetNowState());
         ArrayList donelist = new ArrayList();
