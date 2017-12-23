@@ -93,6 +93,11 @@ public class EventAreaInspector : Editor{
             SerializedProperty actinlist = statedo.FindPropertyRelative("ActionList");
             SerializedProperty animatorlist = statedo.FindPropertyRelative("AnimatorList");
             SerializedProperty animationActionlist = statedo.FindPropertyRelative("AnimationAction");
+            if (animatorlist.arraySize != actinlist.arraySize)
+                animatorlist.arraySize = actinlist.arraySize;
+            if (animationActionlist.arraySize != actinlist.arraySize)
+                animationActionlist.arraySize = actinlist.arraySize;
+
             showActionList[i] = EditorGUILayout.Foldout(showActionList[i], "  动画列表: " + actinlist.arraySize + "个", true);
             if (showActionList[i])
             {
