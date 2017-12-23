@@ -79,7 +79,6 @@ public class ClickElement : ElementBase
         //执行动作
         if (clip != null)
         {
-            string rootname = clip.name.Split('_')[0];
             ani = animator;
             if (ani == null) return;
 

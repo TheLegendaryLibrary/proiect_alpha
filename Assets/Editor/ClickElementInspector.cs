@@ -87,11 +87,17 @@ public class ClickElementInspector : Editor
 
                     //播放方式
                     SerializedProperty animationtype = animationActionlist.GetArrayElementAtIndex(j);
-                    EditorGUILayout.PropertyField(animationtype, pointContent, GUILayout.Width(70f));
+                    if (animationtype != null)
+                        EditorGUILayout.PropertyField(animationtype, pointContent, GUILayout.Width(70f));
 
                     if (GUILayout.Button(deleteAniContent, EditorStyles.miniButton, GUILayout.Width(20f)))
                     {
+
+                        if (actinlist.GetArrayElementAtIndex(j).objectReferenceValue != null)
+                            actinlist.DeleteArrayElementAtIndex(j);
                         actinlist.DeleteArrayElementAtIndex(j);
+                        if (animatorlist.GetArrayElementAtIndex(j).objectReferenceValue != null)
+                            animatorlist.DeleteArrayElementAtIndex(j);
                         animatorlist.DeleteArrayElementAtIndex(j);
                         animationActionlist.DeleteArrayElementAtIndex(j);
                         SaveProperties();
@@ -99,7 +105,7 @@ public class ClickElementInspector : Editor
                     }
                     EditorGUILayout.EndHorizontal();
                     //动画归纳成组的判断
-                    if (animationtype.enumValueIndex == 1)
+                    if (animationtype != null && animationtype.enumValueIndex == 1)
                     {
                         EditorGUILayout.HelpBox("-----上面的动画播放完后在播放之后的动画------", MessageType.None);
                     }
