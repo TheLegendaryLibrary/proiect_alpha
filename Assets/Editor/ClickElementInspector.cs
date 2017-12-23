@@ -92,7 +92,6 @@ public class ClickElementInspector : Editor
 
                     if (GUILayout.Button(deleteAniContent, EditorStyles.miniButton, GUILayout.Width(20f)))
                     {
-
                         if (actinlist.GetArrayElementAtIndex(j).objectReferenceValue != null)
                             actinlist.DeleteArrayElementAtIndex(j);
                         actinlist.DeleteArrayElementAtIndex(j);
