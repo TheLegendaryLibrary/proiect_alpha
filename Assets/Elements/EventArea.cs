@@ -25,18 +25,22 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
         public int StateID;
         public string DragName;
         public AnimationClip[] ActionList;
+        public Animator[] AnimatorList;
+        public AnimationType[] AnimationAction;
         public StateAction NextDo;
 
     }
 
     public StateDo[] DoList;
     Animator ani;
+    int animation_index = 0;
 
     // Use this for initialization
     override public void Awake()
     {
         IntiElement();
         IntiArea();
+        animation_index = 0;
     }
 	
     //初始化当前状态
@@ -131,18 +135,14 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
 
             if (_do.DragName.CompareTo(dropObject.name) == 0)
             {
+                if (ishideitem)
+                    dropObject.GetComponent<Image>().color = Color.clear;
+
                 float maxTime = -1;
+                animation_index = 0;
                 //执行这个State下的多个动作
-                foreach (AnimationClip action in _do.ActionList)
-                {
-                    if (action != null)
-                        maxTime = Mathf.Max(maxTime, action.length);
+                maxTime = CheckAnimationList(_do);
 
-                    if (ishideitem)
-                        dropObject.GetComponent<Image>().color = Color.clear;
-
-                    PlayAnimation(action);
-                }
                 data.pointerDrag = null;
                 dropObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
                 MoveToCenter effect = GetMoveToCenter(dropObject);
@@ -152,13 +152,40 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
         }
     }
 
-    private void PlayAnimation(AnimationClip clip)
+    private void DoAnimationNext(StateDo _do)
+    {
+        //执行动作
+        float maxTime = -1;
+        //执行这个State下的多个动作
+        maxTime = CheckAnimationList(_do);
+        WaitForCheckAction(maxTime, _do);
+    }
+
+    float CheckAnimationList(StateDo _do)
+    {
+        float maxTime = -1;
+        for (int i = animation_index; i < _do.ActionList.Length; i++)
+        {
+            AnimationClip action = _do.ActionList[i];
+            if (action != null)
+                maxTime = Mathf.Max(maxTime, action.length);
+
+            PlayAnimation(action, GetAnimator(animation_index, _do));
+            animation_index++;
+
+            //如果是顺序执行则先等待动画播放完
+            if (_do.AnimationAction[animation_index - 1] == AnimationType.Next)
+                break;
+        }
+        return maxTime;
+    }
+
+    private void PlayAnimation(AnimationClip clip, Animator animator)
     {
         //执行动作
         if (clip != null)
         {
-            string rootname = clip.name.Split('_')[0];
-            ani = GetAnimator(rootname);
+            ani = animator;
             if (ani == null) return;
 
             ani.Play(clip.name, 0, 0);
@@ -173,13 +200,24 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
             //等待动画播放完执行下一步判断
             TimeTool.SetWaitTime(time, gameObject, () =>
             {
-                GetLevelManager().SetLevelState(LevelManager.LevelStateType.Common);
-                CheckAction(_do.NextDo, jumpnum);
+                if (animation_index >= _do.ActionList.Length)
+                {
+                    GetLevelManager().SetLevelState(LevelManager.LevelStateType.Common);
+                    CheckAction(_do.NextDo, jumpnum);
+                }
+                else
+                    DoAnimationNext(_do);
+
             });
         }
         else
         {
-            CheckAction(_do.NextDo, jumpnum);
+            if (animation_index >= _do.ActionList.Length)
+            {
+                CheckAction(_do.NextDo, jumpnum);
+            }
+            else
+                DoAnimationNext(_do);
         }
     }
 
@@ -209,5 +247,15 @@ public class EventArea : ElementBase, IDropHandler, IPointerEnterHandler, IPoint
         if (moveeffect == null)
             moveeffect = dropObject.gameObject.AddComponent<MoveToCenter>();
         return moveeffect;
+    }
+
+    public Animator GetAnimator(int index, StateDo _do)
+    {
+        if (_do.AnimatorList.Length > index)
+        {
+            return _do.AnimatorList[index];
+        }
+        else
+            return null;
     }
 }

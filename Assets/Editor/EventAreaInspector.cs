@@ -91,27 +91,51 @@ public class EventAreaInspector : Editor{
             //状态列表内的动画列表
             EditorGUI.indentLevel = 1;
             SerializedProperty actinlist = statedo.FindPropertyRelative("ActionList");
+            SerializedProperty animatorlist = statedo.FindPropertyRelative("AnimatorList");
+            SerializedProperty animationActionlist = statedo.FindPropertyRelative("AnimationAction");
             showActionList[i] = EditorGUILayout.Foldout(showActionList[i], "  动画列表: " + actinlist.arraySize + "个", true);
             if (showActionList[i])
             {
                 for (int j = 0; j < actinlist.arraySize; j++)
                 {
                     EditorGUILayout.BeginHorizontal();
+                    //动画控制器
+                    SerializedProperty animator = animatorlist.GetArrayElementAtIndex(j);
+                    EditorGUILayout.PropertyField(animator, pointContent);
+
+                    //动画clip
                     SerializedProperty clip = actinlist.GetArrayElementAtIndex(j);
                     EditorGUILayout.PropertyField(clip, pointContent);
+
+                    //播放方式
+                    SerializedProperty animationtype = animationActionlist.GetArrayElementAtIndex(j);
+                    if (animationtype != null)
+                        EditorGUILayout.PropertyField(animationtype, pointContent, GUILayout.Width(70f));
+
                     if (GUILayout.Button(deleteAniContent, EditorStyles.miniButton, GUILayout.Width(20f)))
                     {
+                        if (actinlist.GetArrayElementAtIndex(j).objectReferenceValue != null)
+                            actinlist.DeleteArrayElementAtIndex(j);
                         actinlist.DeleteArrayElementAtIndex(j);
+                        if (animatorlist.GetArrayElementAtIndex(j).objectReferenceValue != null)
+                            animatorlist.DeleteArrayElementAtIndex(j);
+                        animatorlist.DeleteArrayElementAtIndex(j);
+                        animationActionlist.DeleteArrayElementAtIndex(j);
                         SaveProperties();
                         return;
                     }
                     EditorGUILayout.EndHorizontal();
-                    //检查是否出错
-                    if (clip.objectReferenceValue != null)
+                    //动画归纳成组的判断
+                    if (animationtype != null && animationtype.enumValueIndex == 1)
                     {
-                        string rootname = clip.objectReferenceValue.name.Split('_')[0];
-                        GetAnimator(rootname);
+                        EditorGUILayout.HelpBox("-----上面的动画播放完后在播放之后的动画------", MessageType.None);
                     }
+                    ////检查是否出错
+                    //if (clip.objectReferenceValue != null)
+                    //{
+                    //    string rootname = clip.objectReferenceValue.name.Split('_')[0];
+                    //    GetAnimator(rootname);
+                    //}
                 }
                 //添加动画按钮
                 EditorGUILayout.BeginHorizontal();
@@ -119,6 +143,8 @@ public class EventAreaInspector : Editor{
                 if (GUILayout.Button(insertAniContent, EditorStyles.miniButton, GUILayout.MinWidth(80f), GUILayout.MaxWidth(200f)))
                 {
                     actinlist.InsertArrayElementAtIndex(actinlist.arraySize);
+                    animatorlist.InsertArrayElementAtIndex(animatorlist.arraySize);
+                    animationActionlist.InsertArrayElementAtIndex(animationActionlist.arraySize);
                     SaveProperties();
                     return;
                 }
