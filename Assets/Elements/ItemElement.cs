@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemElement : ElementBase, IPointerClickHandler
+public class ItemElement : ElementBase, IPointerClickHandler, IPointerDownHandler
 {
 
     [Header("道具名称：")]
@@ -23,6 +23,11 @@ public class ItemElement : ElementBase, IPointerClickHandler
 	void Update () {
 		
 	}
+
+    public void OnPointerDown(PointerEventData data)
+    {
+
+    }
 
     public void OnPointerClick(PointerEventData data)
     {
