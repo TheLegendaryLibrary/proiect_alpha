@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
+    ArrayList imagelist = new ArrayList();
     int NowState = 1;   //当前状态，不同的状态对应不同的操作
-    int level = 0;      //关卡id
 
     //游戏状态
     public enum LevelStateType
@@ -22,17 +23,19 @@ public class LevelManager : MonoBehaviour {
 
     public GameObject CompleteBoard;
     public GameObject FailBoard;
+    public GameObject LevelText;
     public string NextLevel;
     private RectTransform BagUI;
 
     private void Awake()
     {
         IntiManager();
+        LevelBeginEffect();
     }
 
     // Use this for initialization
     void Start () {
-        CheckElementsList();
+
     }
 	
 	// Update is called once per frame
@@ -45,8 +48,6 @@ public class LevelManager : MonoBehaviour {
     {
         NowState = 1;
         BagUI = transform.Find("/GameCanvas/UIlayer/bagUI") as RectTransform;
-
-        Debug.LogFormat("初始化关卡<color=green> {0} </color>成功！", level);  
     }
 
     public int GetNowState()
@@ -204,5 +205,68 @@ public class LevelManager : MonoBehaviour {
     public void SetLevelState(LevelStateType _levelstate)
     {
         LevelState = _levelstate;
+    }
+
+    void FindImage(Transform transform)
+    {
+        foreach (Transform t in transform)
+        {
+            if (t.name == "playerLayer" || t.name.Contains("studentLayer") || t.name.Contains("teacherLayer"))
+            {
+                imagelist.Add(t);
+            }
+            else if ((t.name.CompareTo("UIlayer") == 0))
+            {
+                continue;
+            }
+            else
+            {
+                if (t.GetComponent<Image>() != null)
+                    imagelist.Add(t);
+                if (t.childCount > 0)
+                    FindImage(t);
+            }
+        }
+    }
+
+    ArrayList ShuffleList(ArrayList list)
+    {
+        ArrayList newlist = new ArrayList();
+        int count = list.Count;
+        for (int i = 0; i < count; i++)
+        {
+            int index = Random.Range(0, list.Count);
+            newlist.Add(list[index]);
+            list.RemoveAt(index);
+        }
+        return newlist;
+    }
+
+    void LevelBeginEffect()
+    {
+        SetLevelState(LevelStateType.PlayAnimation);
+
+        FindImage(transform.Find("/GameCanvas"));
+        //imagelist = ShuffleList(imagelist);
+        float dely = 0;
+        foreach (Transform t in imagelist)
+        {
+            t.localScale = new Vector3(1, 0, 1);
+            LeanTween.scaleY(t.gameObject, 1, 1f).setEase(LeanTweenType.easeOutBack).setDelay(dely);
+            dely += 0.1f;
+        }
+        TimeTool.SetWaitTime(dely+0.5f, gameObject, () =>
+        {
+            LevelText.transform.Find("Text").GetComponent<Text>().text = SceneManager.GetActiveScene().name;
+            Animator ani = LevelText.GetComponent<Animator>();
+            ani.Play("LevelShow", 0, 0);
+
+            float time = ani.runtimeAnimatorController.animationClips[0].length;
+            TimeTool.SetWaitTime(time, gameObject, () =>
+              {
+                  SetLevelState(LevelStateType.Common);
+                  CheckElementsList();
+              });
+        });
     }
 }

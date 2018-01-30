@@ -49,7 +49,7 @@ namespace qtools.qhierarchy.phelper
             GUI.DrawTexture(paletteRect, colorPaletteTexture);
 
             Vector2 mousePosition = Event.current.mousePosition;
-            if (Event.current.isMouse && Event.current.button == 0 && Event.current.type == EventType.mouseUp && paletteRect.Contains(mousePosition))
+            if (Event.current.isMouse && Event.current.button == 0 && Event.current.type == EventType.MouseUp && paletteRect.Contains(mousePosition))
             {
                 Event.current.Use();
                 if (mousePosition.x < 15 && mousePosition.y < 15)
