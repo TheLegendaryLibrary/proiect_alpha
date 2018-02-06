@@ -215,7 +215,7 @@ public class LevelManager : MonoBehaviour {
             {
                 imagelist.Add(t);
             }
-            else if ((t.name.CompareTo("UIlayer") == 0))
+            else if ((t.name.CompareTo("UIlayer") == 0) || (t.name.CompareTo("bg") == 0))
             {
                 continue;
             }
